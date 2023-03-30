@@ -1,5 +1,7 @@
 package com.tads.jerseymarketapi.models;
 
+import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -15,27 +17,35 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUser;
-    @Column(nullable = false, unique = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String userName;
     @Column(nullable = false, unique = true, length = 50)
     private String email;
-    @Column(nullable = false, unique = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String password;
-    @Column(nullable = false, unique = false, length = 13)
-    private String userType;
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private UserGroupEnum userGroup;
     @Column(nullable = false)
     private LocalDateTime registrationDate;
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private UserStatusEnum status;
 
-    public long getId() {
+    public long getIdUser() {
         return idUser;
     }
 
-    public String getName() {
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getUserName() {
         return userName;
     }
 
-    public void setName(String name) {
-        this.userName = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -54,12 +64,12 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public UserGroupEnum getUserGroup() {
+        return userGroup;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUserGroup(UserGroupEnum userGroup) {
+        this.userGroup = userGroup;
     }
 
     public LocalDateTime getRegistrationDate() {
@@ -68,5 +78,13 @@ public class UserModel implements Serializable {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public UserStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatusEnum status) {
+        this.status = status;
     }
 }

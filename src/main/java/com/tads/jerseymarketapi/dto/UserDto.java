@@ -1,25 +1,31 @@
 package com.tads.jerseymarketapi.dto;
 
+import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.apache.catalina.User;
 
 public class UserDto {
 
     @NotBlank
     private String userName;
-    @NotBlank @Email
+    @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String userType;
+    @NotNull
+    private UserGroupEnum userGroup;
+    @NotNull
+    private int status;
 
-    public String getName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setName(String name) {
-        this.userName = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -38,11 +44,19 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public UserGroupEnum getUserGroup() {
+        return userGroup;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUserGroup(UserGroupEnum userGroup) {
+        this.userGroup = userGroup;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
