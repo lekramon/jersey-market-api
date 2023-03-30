@@ -1,12 +1,13 @@
-package dto;
+package com.tads.jerseymarketapi.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserDto {
 
     @NotBlank
-    private String name;
-    @NotBlank
+    private String userName;
+    @NotBlank @Email
     private String email;
     @NotBlank
     private String password;
@@ -14,11 +15,11 @@ public class UserDto {
     private String userType;
 
     public String getName() {
-        return name;
+        return userName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
 
     public String getEmail() {
