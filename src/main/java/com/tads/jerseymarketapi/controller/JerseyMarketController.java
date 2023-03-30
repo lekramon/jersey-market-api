@@ -1,7 +1,7 @@
 package com.tads.jerseymarketapi.controller;
 
-import com.tads.jerseymarketapi.models.JerseyMarketUserModel;
-import com.tads.jerseymarketapi.service.JerseyMarketService;
+import com.tads.jerseymarketapi.models.UserModel;
+import com.tads.jerseymarketapi.service.UserService;
 import dto.UserDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -19,17 +19,17 @@ import java.time.ZoneId;
 @RequestMapping("/jersey-market")
 public class JerseyMarketController {
 
-    final JerseyMarketService jerseyMarketService;
+    final UserService userService;
 
-    public JerseyMarketController(JerseyMarketService jerseyMarketService) {
-        this.jerseyMarketService = jerseyMarketService;
+    public JerseyMarketController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto) {
-        var jerseyMarketUserModel = new JerseyMarketUserModel();
+        var jerseyMarketUserModel = new UserModel();
         BeanUtils.copyProperties(userDto, jerseyMarketUserModel);
         jerseyMarketUserModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(jerseyMarketService.save(jerseyMarketUserModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(jerseyMarketUserModel));
     }
 }
