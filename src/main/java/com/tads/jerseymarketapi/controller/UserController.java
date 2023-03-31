@@ -1,5 +1,6 @@
 package com.tads.jerseymarketapi.controller;
 
+import com.tads.jerseymarketapi.dto.LoginRequest;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.service.UserService;
@@ -26,9 +27,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDto));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        UserModel userModel = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        if (userModel != null) {
+            String login = "logado";
+            return ResponseEntity.ok(login);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha ou e-mail inválida");
+        }
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<UserModel>> getAllUserModels() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
+
 
 }
