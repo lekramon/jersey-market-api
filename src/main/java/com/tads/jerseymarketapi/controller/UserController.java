@@ -31,10 +31,10 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         UserModel userModel = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
         if (userModel != null) {
-            String login = "logado";
+            String login = "Successfully login!";
             return ResponseEntity.ok(login);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha ou e-mail inválida");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid e-mail or password");
         }
     }
 
