@@ -5,7 +5,6 @@ import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.service.UserService;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +26,7 @@ public class UserController {
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDto));
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         UserModel userModel = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
@@ -37,6 +37,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid e-mail or password");
         }
     }
+
     @GetMapping("/list")
     public ResponseEntity<List<UserModel>> getAllUserModels() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
