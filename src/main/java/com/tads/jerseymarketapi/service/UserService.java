@@ -2,6 +2,7 @@ package com.tads.jerseymarketapi.service;
 
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
+import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
 import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -51,5 +52,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<UserModel> findAdmin() {
+        return userRepository.findByUserGroup(UserGroupEnum.ADMIN);
+    }
+
+    public List<UserModel> findStorekeeper() {
+        return userRepository.findByUserGroup(UserGroupEnum.STOREKEEPER);
+    }
 
 }

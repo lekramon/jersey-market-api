@@ -16,7 +16,7 @@ public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUser;
+    private long id;
     @Column(nullable = false, length = 30)
     private String userName;
     @Column(nullable = false, unique = true, length = 50)
@@ -32,12 +32,12 @@ public class UserModel implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private UserStatusEnum status;
 
-    public long getIdUser() {
-        return idUser;
+    public long getId() {
+        return id;
     }
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setId(long idUser) {
+        this.id = idUser;
     }
 
     public String getUserName() {

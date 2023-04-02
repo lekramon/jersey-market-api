@@ -42,4 +42,15 @@ public class UserController {
     public ResponseEntity<List<UserModel>> getAllUserModels() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
+
+    @GetMapping("/list/admin")
+    public ResponseEntity<List<UserModel>> getAdminUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAdmin());
+    }
+
+    @GetMapping("/list/storekeeper")
+    public ResponseEntity<List<UserModel>> getStorekeeperUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findStorekeeper());
+    }
+
 }
