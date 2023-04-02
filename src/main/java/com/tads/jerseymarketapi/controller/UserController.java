@@ -33,9 +33,8 @@ public class UserController {
         if (userModel != null) {
             String login = String.valueOf(userModel.getUserGroup());
             return ResponseEntity.ok(login);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid e-mail or password");
         }
+        return null;
     }
 
     @GetMapping("/list")

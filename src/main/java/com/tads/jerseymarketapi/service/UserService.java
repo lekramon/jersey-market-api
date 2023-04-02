@@ -7,8 +7,10 @@ import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,6 +28,10 @@ public class UserService {
 
     @Transactional
     public UserModel save(UserDto userDto) {
+        Optional<UserModel> optionalUserModel = userRepository.findByEmail(userDto.getEmail());
+        if (optionalUserModel.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists. Please choose a different email.");
+        }
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -44,6 +50,8 @@ public class UserService {
             if (cryptographic.matches(password, userModel.getPassword())) {
                 return userModel;
             }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid e-mail or password.");
         }
         return null;
     }
