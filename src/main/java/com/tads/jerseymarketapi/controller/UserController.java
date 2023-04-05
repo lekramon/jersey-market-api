@@ -3,13 +3,17 @@ package com.tads.jerseymarketapi.controller;
 import com.tads.jerseymarketapi.dto.LoginRequest;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
+import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
+import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -17,9 +21,12 @@ import java.util.List;
 public class UserController {
 
     final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/register")
@@ -28,17 +35,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
         UserModel userModel = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
         if (userModel != null) {
-            String login = String.valueOf(userModel.getUserGroup());
-            return ResponseEntity.ok(login);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("userGroup", userModel.getUserGroup());
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<UserModel>> getAllUserModels() {
+    public ResponseEntity<List<UserModel>> getAllUser() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
@@ -50,6 +59,11 @@ public class UserController {
     @GetMapping("/list/storekeeper")
     public ResponseEntity<List<UserModel>> getStorekeeperUser() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findStorekeeper());
+    }
+
+    @PutMapping("/{id}/status")
+    public UserModel updateUserStatusById(@PathVariable("id") Long id, @RequestBody UserStatusEnum status) {
+        return userRepository.save(userService.updateUserStatusById(id, status));
     }
 
 }

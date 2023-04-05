@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<UserModel, Id> {
     Optional<UserModel> findByEmail(String email);
 
     List<UserModel> findByUserGroup(UserGroupEnum groupEnum);
+
+    Optional<UserModel> findById(Long id);
 }
