@@ -32,6 +32,11 @@ public class UserService {
         if (optionalUserModel.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists. Please choose a different email.");
         }
+        String password = userDto.getPassword();
+        String confirmPassword = userDto.getConfirmPassword();
+        if (!password.equals(confirmPassword)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match.");
+        }
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -66,6 +71,10 @@ public class UserService {
 
     public List<UserModel> findStorekeeper() {
         return userRepository.findByUserGroup(UserGroupEnum.STOREKEEPER);
+    }
+
+    public List<UserModel> findClient() {
+        return userRepository.findByUserGroup(UserGroupEnum.CLIENT);
     }
 
     @Transactional

@@ -61,6 +61,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findStorekeeper());
     }
 
+    @GetMapping("/list/client")
+    public ResponseEntity<List<UserModel>> getClient() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findClient());
+    }
+
     @PutMapping("/{id}/status")
     public UserModel updateUserStatusById(@PathVariable("id") Long id, @RequestBody UserStatusEnum status) {
         return userRepository.save(userService.updateUserStatusById(id, status));

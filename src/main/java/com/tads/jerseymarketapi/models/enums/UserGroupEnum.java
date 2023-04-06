@@ -2,7 +2,8 @@ package com.tads.jerseymarketapi.models.enums;
 
 public enum UserGroupEnum {
     ADMIN(1),
-    STOREKEEPER(2);
+    STOREKEEPER(2),
+    CLIENT(3);
 
     private final int userGroupId;
 
