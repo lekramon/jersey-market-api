@@ -23,6 +23,8 @@ public class UserModel implements Serializable {
     private String email;
     @Column(nullable = false, length = 100)
     private String password;
+    @Column(nullable = false, length = 14)
+    private String cpf;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private UserGroupEnum userGroup;
@@ -86,5 +88,13 @@ public class UserModel implements Serializable {
 
     public void setStatus(UserStatusEnum status) {
         this.status = status;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
