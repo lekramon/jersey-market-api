@@ -39,7 +39,7 @@ public class UserService {
         }
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
-        userModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        userModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
         BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
         String encodedPassword = cryptographic.encode(userModel.getPassword());
         userModel.setPassword(encodedPassword);
