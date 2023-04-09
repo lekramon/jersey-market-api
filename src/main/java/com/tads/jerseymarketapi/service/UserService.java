@@ -77,15 +77,9 @@ public class UserService {
         return userRepository.findByUserGroup(UserGroupEnum.CLIENT);
     }
 
-    @Transactional
-    public UserModel updateUserStatusById(Long id, UserStatusEnum status) {
-        Optional<UserModel> optionalUserModel = userRepository.findById(id);
-        if (optionalUserModel.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
-        UserModel userModel = optionalUserModel.get();
-        userModel.setStatus(status);
-        return userRepository.save(userModel);
+
+    public Optional<UserModel> findById(Long id) {
+        return userRepository.findById(id);
     }
 
 }

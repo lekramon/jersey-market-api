@@ -1,9 +1,9 @@
 package com.tads.jerseymarketapi.controller;
 
-import com.tads.jerseymarketapi.dto.LoginRequest;
+import com.tads.jerseymarketapi.dto.LoginRequestDto;
+import com.tads.jerseymarketapi.dto.UpdateUserStatusDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
-import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.UserService;
 import jakarta.validation.Valid;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -35,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
-        UserModel userModel = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
+    public ResponseEntity<Object> login(@RequestBody LoginRequestDto loginRequestDto) {
+        UserModel userModel = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         if (userModel != null) {
             Map<String, Object> response = new HashMap<>();
             response.put("status", "success");
@@ -67,8 +68,16 @@ public class UserController {
     }
 
     @PutMapping("/{id}/status")
-    public UserModel updateUserStatusById(@PathVariable("id") Long id, @RequestBody UserStatusEnum status) {
-        return userRepository.save(userService.updateUserStatusById(id, status));
+    public ResponseEntity<Object> updateUserStatusById(@PathVariable(value = "id") long id,
+                                                       @RequestBody @Valid UpdateUserStatusDto updateUserStatusDTO) {
+        Optional<UserModel> userModelOpt = userService.findById(id);
+        if (userModelOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+        UserModel userModel = userModelOpt.get();
+        userModel.setStatus(updateUserStatusDTO.getStatus());
+        UserModel updatedUserModel = userRepository.save(userModel);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUserModel);
     }
 
 }

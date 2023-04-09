@@ -1,6 +1,7 @@
 package com.tads.jerseymarketapi.dto;
 
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class UserDto {
     @NotNull
     private UserGroupEnum userGroup;
     @NotNull
-    private int status;
+    private UserStatusEnum status;
 
     public String getUserName() {
         return userName;
@@ -56,11 +57,11 @@ public class UserDto {
         this.userGroup = userGroup;
     }
 
-    public int getStatus() {
+    public UserStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(UserStatusEnum status) {
         this.status = status;
     }
 
