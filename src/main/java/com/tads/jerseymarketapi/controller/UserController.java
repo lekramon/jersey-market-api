@@ -4,7 +4,6 @@ import com.tads.jerseymarketapi.dto.LoginRequestDto;
 import com.tads.jerseymarketapi.dto.UpdateUserStatusDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
-import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,17 +21,14 @@ import java.util.Optional;
 public class UserController {
 
     final UserService userService;
-    private final UserRepository userRepository;
 
-    public UserController(UserService userService,
-                          UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @PostMapping("/register")
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(userDto));
     }
 
     @PostMapping("/login")
@@ -76,7 +72,7 @@ public class UserController {
         }
         UserModel userModel = userModelOpt.get();
         userModel.setStatus(updateUserStatusDTO.getStatus());
-        UserModel updatedUserModel = userRepository.save(userModel);
+        UserModel updatedUserModel = userService.save(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUserModel);
     }
 

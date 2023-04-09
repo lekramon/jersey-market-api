@@ -27,7 +27,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserModel save(UserDto userDto) {
+    public UserModel register(UserDto userDto) {
         Optional<UserModel> optionalUserModel = userRepository.findByEmail(userDto.getEmail());
         if (optionalUserModel.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists. Please choose a different email.");
@@ -44,6 +44,10 @@ public class UserService {
         String encodedPassword = cryptographic.encode(userModel.getPassword());
         userModel.setPassword(encodedPassword);
         userModel.setStatus(UserStatusEnum.ACTIVE);
+        return userRepository.save(userModel);
+    }
+
+    public UserModel save(UserModel userModel) {
         return userRepository.save(userModel);
     }
 
