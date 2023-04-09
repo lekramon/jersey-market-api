@@ -43,7 +43,6 @@ public class UserService {
         BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
         String encodedPassword = cryptographic.encode(userModel.getPassword());
         userModel.setPassword(encodedPassword);
-        userModel.setStatus(UserStatusEnum.ACTIVE);
         return userRepository.save(userModel);
     }
 

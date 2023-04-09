@@ -32,7 +32,7 @@ public class UserModel implements Serializable {
     private LocalDateTime registrationDate;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserStatusEnum status;
+    private UserStatusEnum status = UserStatusEnum.ACTIVE;
 
     public long getId() {
         return id;
