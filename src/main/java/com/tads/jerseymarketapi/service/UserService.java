@@ -65,8 +65,12 @@ public class UserService {
     }
 
 
-    public Optional<UserModel> findById(Long id) {
-        return userRepository.findById(id);
+    public UserModel findById(Long id) {
+        Optional<UserModel> optionalUserModel = userRepository.findById(id);
+        if (optionalUserModel.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+        }
+        return optionalUserModel.get();
     }
 
     private void checkUserExistsByEmailToRegister(String email) {
