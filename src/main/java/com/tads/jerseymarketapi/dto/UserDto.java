@@ -15,8 +15,6 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String confirmPassword;
     @CPF(message = "invalid cpf")
     private String cpf;
     @NotNull
@@ -62,12 +60,5 @@ public class UserDto {
         this.cpf = cpf;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 }
 

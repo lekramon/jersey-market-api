@@ -27,20 +27,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<UserModel> saveUser(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(userDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDto loginRequestDto) {
         UserModel userModel = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
-        if (userModel != null) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("userGroup", userModel.getUserGroup());
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        Map<String, Object> response = new HashMap<>();
+        response.put("userGroup", userModel.getUserGroup());
+        response.put("status", "success");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/list")
