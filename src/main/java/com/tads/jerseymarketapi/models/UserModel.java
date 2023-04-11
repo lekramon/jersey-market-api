@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "TB_USER")
+@Table(name = "tb_user")
 public class UserModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
