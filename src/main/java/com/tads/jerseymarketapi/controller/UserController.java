@@ -1,7 +1,7 @@
 package com.tads.jerseymarketapi.controller;
 
 import com.tads.jerseymarketapi.dto.LoginRequestDto;
-import com.tads.jerseymarketapi.dto.UpdateUserStatusDto;
+import com.tads.jerseymarketapi.dto.UpdateUserDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.service.UserService;
@@ -34,6 +34,8 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDto loginRequestDto) {
         UserModel userModel = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         Map<String, Object> response = new HashMap<>();
+        response.put("name", userModel.getName());
+        response.put("id", userModel.getId());
         response.put("userGroup", userModel.getUserGroup());
         response.put("status", "success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -59,12 +61,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findClient());
     }
 
-    @PutMapping("/{id}/status")
-    public ResponseEntity<Object> updateUserStatusById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateUserStatusDto updateUserStatusDTO) {
-        UserModel userModel = userService.findById(id);
-        userModel.setStatus(updateUserStatusDTO.getStatus());
-        UserModel updatedUserModel = userService.save(userModel);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUserModel);
+    @PutMapping("/{id}/update")
+    public ResponseEntity<Object> updateUserStatusById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateUserDto updateUserDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(updateUserDTO, id));
     }
-
 }

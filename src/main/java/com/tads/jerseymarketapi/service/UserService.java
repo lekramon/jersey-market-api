@@ -1,10 +1,12 @@
 package com.tads.jerseymarketapi.service;
 
+import com.tads.jerseymarketapi.dto.UpdateUserDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.factory.UserFactory;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,13 +34,13 @@ public class UserService {
         return userRepository.save(userFactory.createUserModel(userDto));
     }
 
-
     public UserModel save(UserModel userModel) {
         return userRepository.save(userModel);
     }
 
     public UserModel login(String email, String password) {
         UserModel userModel = checkUserExistsByEmailToLogin(email);
+
         BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
 
         if (cryptographic.matches(password, userModel.getPassword())) {
@@ -65,12 +67,13 @@ public class UserService {
     }
 
 
-    public UserModel findById(Long id) {
-        Optional<UserModel> optionalUserModel = userRepository.findById(id);
-        if (optionalUserModel.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
-        }
-        return optionalUserModel.get();
+    @Transactional
+    public UserModel updateUserById(UpdateUserDto updateUserDto, long id) {
+        UserModel userModel = checkUserExistsByIdToUpdate(id);
+
+        updateUserIfNotBlankOrNull(updateUserDto, userModel);
+
+        return userRepository.save(userModel);
     }
 
     private void checkUserExistsByEmailToRegister(String email) {
@@ -89,6 +92,33 @@ public class UserService {
         }
 
         return optionalUserModel.get();
+    }
+
+    private UserModel checkUserExistsByIdToUpdate(long id) {
+        Optional<UserModel> optionalUserModel = userRepository.findById(id);
+
+        if (optionalUserModel.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+        }
+
+        return optionalUserModel.get();
+    }
+
+    private void updateUserIfNotBlankOrNull(UpdateUserDto updateUserDto, UserModel userModel) {
+        if (updateUserDto.getStatus() != null) {
+            userModel.setStatus(updateUserDto.getStatus());
+        }
+        if (!StringUtils.isBlank(updateUserDto.getName())) {
+            userModel.setName(updateUserDto.getName());
+        }
+        if (updateUserDto.getUserGroup() != null) {
+            userModel.setUserGroup(updateUserDto.getUserGroup());
+        }
+        if (!StringUtils.isBlank(updateUserDto.getPassword())) {
+            BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
+            String encodedPassword = cryptographic.encode(updateUserDto.getPassword());
+            userModel.setPassword(encodedPassword);
+        }
     }
 
 }

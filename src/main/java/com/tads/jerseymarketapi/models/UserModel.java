@@ -34,6 +34,7 @@ public class UserModel implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private UserStatusEnum status = UserStatusEnum.ACTIVE;
 
+
     public long getId() {
         return id;
     }
