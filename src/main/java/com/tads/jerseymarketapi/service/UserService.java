@@ -113,11 +113,11 @@ public class UserService {
         if (updateUserDto.getStatus() != null) {
             userModel.setStatus(updateUserDto.getStatus());
         }
-        if (!StringUtils.isBlank(updateUserDto.getName())) {
-            userModel.setName(updateUserDto.getName());
-        }
         if (updateUserDto.getUserGroup() != null) {
             userModel.setUserGroup(updateUserDto.getUserGroup());
+        }
+        if (!StringUtils.isBlank(updateUserDto.getName())) {
+            userModel.setName(updateUserDto.getName());
         }
         if (!StringUtils.isBlank(updateUserDto.getPassword())) {
             BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
