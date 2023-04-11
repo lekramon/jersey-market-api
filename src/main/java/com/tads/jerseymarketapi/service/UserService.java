@@ -4,6 +4,7 @@ import com.tads.jerseymarketapi.dto.UpdateUserDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.factory.UserFactory;
 import io.micrometer.common.util.StringUtils;
@@ -43,10 +44,14 @@ public class UserService {
 
         BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
 
-        if (cryptographic.matches(password, userModel.getPassword())) {
-            return userModel;
+        if (userModel.getStatus() == UserStatusEnum.ACTIVE) {
+            if (cryptographic.matches(password, userModel.getPassword())) {
+                return userModel;
+            } else {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password.");
+            }
         } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User is not active, tell a admin.");
         }
     }
 
@@ -120,5 +125,4 @@ public class UserService {
             userModel.setPassword(encodedPassword);
         }
     }
-
 }

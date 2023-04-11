@@ -35,6 +35,7 @@ public class UserController {
         UserModel userModel = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         Map<String, Object> response = new HashMap<>();
         response.put("name", userModel.getName());
+        response.put("email", userModel.getEmail());
         response.put("id", userModel.getId());
         response.put("userGroup", userModel.getUserGroup());
         response.put("status", "success");
