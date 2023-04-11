@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 public class UserDto {
 
     @NotBlank
-    private String userName;
+    private String name;
     @NotBlank
     @Email(message = "invalid e-mail")
     private String email;
@@ -20,12 +20,12 @@ public class UserDto {
     @NotNull
     private UserGroupEnum userGroup;
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

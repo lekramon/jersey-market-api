@@ -18,7 +18,7 @@ public class UserModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false, length = 30)
-    private String userName;
+    private String name;
     @Column(nullable = false, unique = true, length = 50)
     private String email;
     @Column(nullable = false, length = 100)
@@ -42,12 +42,12 @@ public class UserModel implements Serializable {
         this.id = idUser;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
