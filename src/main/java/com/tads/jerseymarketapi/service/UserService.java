@@ -124,5 +124,9 @@ public class UserService {
             String encodedPassword = cryptographic.encode(updateUserDto.getPassword());
             userModel.setPassword(encodedPassword);
         }
+        if (!StringUtils.isBlank(updateUserDto.getCpf())) {
+            userModel.setCpf(updateUserDto.getCpf());
+        }
+
     }
 }
