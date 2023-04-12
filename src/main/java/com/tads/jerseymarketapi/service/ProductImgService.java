@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,11 +25,16 @@ public class ProductImgService {
         this.productImgRepository = productImgRepository;
         this.productRepository = productRepository;
     }
-@Transactional
+
+    @Transactional
     public ProductImgModel save(MultipartFile file, long id) throws IOException {
         return uploadFile(file, id);
     }
 
+    public List<ProductImgModel> findProductImgByProductId(long id) {
+        ProductModel productModel = checkProductExistsById(id);
+        return productImgRepository.findByProductId(productModel);
+    }
 
     private ProductImgModel uploadFile(MultipartFile files, long id) throws IOException {
         byte[] data = files.getBytes();
