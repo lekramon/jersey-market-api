@@ -52,7 +52,7 @@ public class ProductImgService {
     private ProductModel checkProductExistsById(long id) {
         Optional<ProductModel> productModel = productRepository.findById(id);
         if (productModel.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid product, this product exists?");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid product, this product exists?");
         }
         return productModel.get();
     }

@@ -28,7 +28,6 @@ public class ProductImgController {
 
     @GetMapping("/id{id}")
     public ResponseEntity<List<ProductImgModel>> getProductImages(@PathVariable("id") long id) {
-        List<ProductImgModel> productImages = productImgService.findProductImgByProductId(id);
         return ResponseEntity.status(HttpStatus.OK).body(productImgService.findProductImgByProductId(id));
     }
 }
