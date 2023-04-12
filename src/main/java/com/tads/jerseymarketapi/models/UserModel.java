@@ -1,7 +1,7 @@
 package com.tads.jerseymarketapi.models;
 
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
-import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
+import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -17,7 +17,7 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 60)
     private String name;
     @Column(nullable = false, unique = true, length = 50)
     private String email;
@@ -32,7 +32,7 @@ public class UserModel implements Serializable {
     private LocalDateTime registrationDate;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserStatusEnum status = UserStatusEnum.ACTIVE;
+    private StatusEnum status = StatusEnum.ACTIVE;
 
 
     public long getId() {
@@ -83,11 +83,11 @@ public class UserModel implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public UserStatusEnum getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatusEnum status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

@@ -4,7 +4,7 @@ import com.tads.jerseymarketapi.dto.UpdateUserDto;
 import com.tads.jerseymarketapi.dto.UserDto;
 import com.tads.jerseymarketapi.models.UserModel;
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
-import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
+import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import com.tads.jerseymarketapi.repository.UserRepository;
 import com.tads.jerseymarketapi.service.factory.UserFactory;
 import io.micrometer.common.util.StringUtils;
@@ -40,7 +40,7 @@ public class UserService {
 
         BCryptPasswordEncoder cryptographic = new BCryptPasswordEncoder(12);
 
-        if (userModel.getStatus() == UserStatusEnum.ACTIVE) {
+        if (userModel.getStatus() == StatusEnum.ACTIVE) {
             if (cryptographic.matches(password, userModel.getPassword())) {
                 return userModel;
             } else {
@@ -127,6 +127,5 @@ public class UserService {
         if (!StringUtils.isBlank(updateUserDto.getCpf())) {
             userModel.setCpf(updateUserDto.getCpf());
         }
-
     }
 }

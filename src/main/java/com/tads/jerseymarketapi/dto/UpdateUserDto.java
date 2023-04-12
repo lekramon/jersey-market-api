@@ -1,12 +1,12 @@
 package com.tads.jerseymarketapi.dto;
 
 import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
-import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
+import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import org.hibernate.validator.constraints.br.CPF;
 
 public class UpdateUserDto {
 
-    private UserStatusEnum status;
+    private StatusEnum status;
 
     private String name;
 
@@ -17,11 +17,11 @@ public class UpdateUserDto {
     @CPF(message = "invalid cpf")
     private String cpf;
 
-    public UserStatusEnum getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatusEnum status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
