@@ -35,10 +35,6 @@ public class UserService {
         return userRepository.save(userFactory.createUserModel(userDto));
     }
 
-    public UserModel save(UserModel userModel) {
-        return userRepository.save(userModel);
-    }
-
     public UserModel login(String email, String password) {
         UserModel userModel = checkUserExistsByEmailToLogin(email);
 
@@ -69,6 +65,10 @@ public class UserService {
 
     public List<UserModel> findClient() {
         return userRepository.findByUserGroup(UserGroupEnum.CLIENT);
+    }
+
+    public Optional<UserModel> findById(long id) {
+        return userRepository.findById(id);
     }
 
 

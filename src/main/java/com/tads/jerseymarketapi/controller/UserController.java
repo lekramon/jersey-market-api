@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -62,7 +63,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findClient());
     }
 
-    @PutMapping("/{id}/update")
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Optional<UserModel>> getUserById(@PathVariable(value = "id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+    }
+
+    @PutMapping("/id/{id}/update")
     public ResponseEntity<Object> updateUserStatusById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateUserDto updateUserDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(updateUserDTO, id));
     }
