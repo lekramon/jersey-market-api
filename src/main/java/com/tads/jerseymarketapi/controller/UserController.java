@@ -44,22 +44,22 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<UserModel>> getAllUser() {
+    public ResponseEntity<List<UserModel>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
     @GetMapping("/list/admin")
-    public ResponseEntity<List<UserModel>> getAdminUser() {
+    public ResponseEntity<List<UserModel>> getAdminUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAdmin());
     }
 
     @GetMapping("/list/storekeeper")
-    public ResponseEntity<List<UserModel>> getStorekeeperUser() {
+    public ResponseEntity<List<UserModel>> getStorekeeperUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findStorekeeper());
     }
 
     @GetMapping("/list/client")
-    public ResponseEntity<List<UserModel>> getClient() {
+    public ResponseEntity<List<UserModel>> getClients() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findClient());
     }
 
