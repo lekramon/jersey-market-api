@@ -15,6 +15,7 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
     @CPF(message = "invalid cpf")
     private String cpf;
     @NotNull
