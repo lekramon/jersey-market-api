@@ -63,12 +63,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findClient());
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/id{id}")
     public ResponseEntity<Optional<UserModel>> getUserById(@PathVariable(value = "id") long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
 
-    @PutMapping("/id/{id}/update")
+    @PutMapping("/id{id}/update")
     public ResponseEntity<Object> updateUserStatusById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateUserDto updateUserDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(updateUserDTO, id));
     }
