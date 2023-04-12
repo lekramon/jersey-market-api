@@ -7,6 +7,8 @@ import com.tads.jerseymarketapi.service.factory.ProductFactory;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -23,6 +25,10 @@ public class ProductService {
 
         return productRepository.save(productFactory.createProductModel(productDto));
 
+    }
+
+    public List<ProductModel> findAll() {
+        return productRepository.findAll();
     }
 
 
