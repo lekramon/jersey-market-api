@@ -5,6 +5,7 @@ import com.tads.jerseymarketapi.models.ProductModel;
 import com.tads.jerseymarketapi.repository.ProductImgRepository;
 import com.tads.jerseymarketapi.repository.ProductRepository;
 import com.tads.jerseymarketapi.service.factory.ProductImgFactory;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,32 @@ public class ProductImgService {
         this.productImgRepository = productImgRepository;
         this.productRepository = productRepository;
     }
+@Transactional
+    public ProductImgModel save(MultipartFile file, long id) throws IOException {
+        return uploadFile(file, id);
+    }
+
+
+    private ProductImgModel uploadFile(MultipartFile files, long id) throws IOException {
+        byte[] data = files.getBytes();
+        String type = files.getContentType();
+        String filename = files.getOriginalFilename();
+        validateFilename(filename);
+
+        ProductModel productModel = checkProductExistsById(id);
+
+        ProductImgFactory productImgFactory = new ProductImgFactory();
+
+        return productImgRepository.save(productImgFactory.createProductImgModel(filename, data, type, productModel));
+    }
+
+    private ProductModel checkProductExistsById(long id) {
+        Optional<ProductModel> productModel = productRepository.findById(id);
+        if (productModel.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid product, this product exists?");
+        }
+        return productModel.get();
+    }
 
     private static void validateFilename(String filename) {
         if (filename != null) {
@@ -32,25 +59,5 @@ public class ProductImgService {
         } else {
             throw new IllegalArgumentException("Filename cannot be null.");
         }
-    }
-
-    public ProductImgModel save(MultipartFile file, long id) throws IOException {
-        return uploadFile(file, id);
-    }
-
-    private ProductImgModel uploadFile(MultipartFile files, long id) throws IOException {
-        byte[] data = files.getBytes();
-        String type = files.getContentType();
-        String filename = files.getOriginalFilename();
-        validateFilename(filename);
-
-        Optional<ProductModel> productModel = productRepository.findById(id);
-        if (productModel.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid product, this product exists?");
-        }
-
-        ProductImgFactory productImgFactory = new ProductImgFactory();
-
-        return productImgRepository.save(productImgFactory.createProductImgModel(filename, data, type, productModel.get()));
     }
 }
