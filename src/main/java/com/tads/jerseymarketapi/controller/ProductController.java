@@ -1,6 +1,7 @@
 package com.tads.jerseymarketapi.controller;
 
 import com.tads.jerseymarketapi.dto.ProductDto;
+import com.tads.jerseymarketapi.dto.UpdateProductDto;
 import com.tads.jerseymarketapi.models.ProductModel;
 import com.tads.jerseymarketapi.service.ProductService;
 import jakarta.validation.Valid;
@@ -29,6 +30,11 @@ public class ProductController {
     @GetMapping("/list")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
+    }
+
+    @PutMapping("/id{id}/update")
+    public ResponseEntity<Object> updateProductById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateProductDto updateProductDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.updateUserById(updateProductDto, id));
     }
 
 }

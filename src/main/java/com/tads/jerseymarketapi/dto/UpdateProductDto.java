@@ -1,21 +1,26 @@
 package com.tads.jerseymarketapi.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.tads.jerseymarketapi.models.enums.StatusEnum;
 
-public class ProductDto {
+public class UpdateProductDto {
 
-    @NotBlank
+    private StatusEnum status;
+
     private String name;
 
-    @NotBlank
     private String description;
 
-    @NotNull
+    private Integer quantity;
+
     private Double price;
 
-    @NotNull
-    private Integer quantity;
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
@@ -33,19 +38,19 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
