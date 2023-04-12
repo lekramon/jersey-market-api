@@ -1,7 +1,7 @@
 CREATE TABLE tb_user
 (
     id                bigint       not null auto_increment primary key,
-    name              varchar(30)  not null,
+    name              varchar(60)  not null,
     email             varchar(50)  not null,
     password          varchar(100) not null,
     cpf               varchar(14)  not null,
