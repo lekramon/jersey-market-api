@@ -15,26 +15,21 @@ public class ProductImgModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long filesId;
 
     @Column(nullable = false)
     private LocalDateTime registrationDate;
 
     @Column(nullable = false)
     private String filename;
-    @Column(nullable = false, length = 1000000)
+    @Column(nullable = false)
     private byte[] data;
 
     private String type;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private ProductModel productId;
-
-
-    public ProductImgModel() {
-
-    }
+    private ProductModel productModel;
 
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
@@ -69,10 +64,10 @@ public class ProductImgModel implements Serializable {
     }
 
     public ProductModel getProduct() {
-        return productId;
+        return productModel;
     }
 
-    public void setProduct(ProductModel productId) {
-        this.productId = productId;
+    public void setProduct(ProductModel productModel) {
+        this.productModel = productModel;
     }
 }
