@@ -1,6 +1,6 @@
 CREATE TABLE tb_files
 (
-    filesId           bigint       not null auto_increment primary key,
+    id                bigint       not null auto_increment primary key,
     data              longblob     not null,
     filename          varchar(255) not null,
     type              varchar(255) not null,

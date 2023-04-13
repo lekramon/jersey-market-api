@@ -16,7 +16,7 @@ public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private long id;
     @Column(nullable = false, length = 60)
     private String name;
     @Column(nullable = false, unique = true, length = 50)
@@ -36,11 +36,11 @@ public class UserModel implements Serializable {
 
 
     public long getId() {
-        return userId;
+        return id;
     }
 
     public void setId(long idUser) {
-        this.userId = idUser;
+        this.id = idUser;
     }
 
     public String getName() {

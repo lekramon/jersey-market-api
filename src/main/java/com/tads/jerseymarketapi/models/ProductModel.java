@@ -16,7 +16,7 @@ public class ProductModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private long id;
 
     @Column(nullable = false, length = 60)
     private String name;
@@ -41,11 +41,11 @@ public class ProductModel implements Serializable {
     private LocalDateTime registrationDate;
 
     public long getId() {
-        return productId;
+        return id;
     }
 
     public void setId(long id) {
-        this.productId = id;
+        this.id = id;
     }
 
     public String getName() {

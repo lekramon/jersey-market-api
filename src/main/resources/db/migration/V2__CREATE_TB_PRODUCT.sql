@@ -1,6 +1,6 @@
 CREATE TABLE tb_product
 (
-    productId         bigint        not null auto_increment primary key,
+    id                bigint        not null auto_increment primary key,
     name              varchar(60)   not null,
     description       varchar(2000) not null,
     price             float(53)     not null,
