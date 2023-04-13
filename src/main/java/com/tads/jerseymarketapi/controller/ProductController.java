@@ -1,6 +1,7 @@
 package com.tads.jerseymarketapi.controller;
 
 import com.tads.jerseymarketapi.dto.ProductDto;
+import com.tads.jerseymarketapi.dto.UpdateProductDto;
 import com.tads.jerseymarketapi.models.ProductModel;
 import com.tads.jerseymarketapi.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -34,13 +35,9 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
     }
 
-    @DeleteMapping("/delete/id{id}")
-    public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable Long id) {
-        productService.deleteById(id);
-        Map<String, Object> response = new HashMap<>();
-        response.put("productId", id);
-        response.put("status", "success deleted");
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    @PutMapping("/id{id}/update")
+    public ResponseEntity<Object> updateProductById(@PathVariable(value = "id") long id, @RequestBody @Valid UpdateProductDto updateProductDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.updateUserById(updateProductDto, id));
     }
 
 }
