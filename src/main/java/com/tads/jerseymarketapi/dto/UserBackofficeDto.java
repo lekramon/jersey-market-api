@@ -1,12 +1,12 @@
 package com.tads.jerseymarketapi.dto;
 
-import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserBackofficeGroupEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CPF;
 
-public class UserDto {
+public class UserBackofficeDto {
 
     @NotBlank
     private String name;
@@ -19,7 +19,7 @@ public class UserDto {
     @CPF(message = "invalid cpf")
     private String cpf;
     @NotNull
-    private UserGroupEnum userGroup;
+    private UserBackofficeGroupEnum userGroup;
 
     public String getName() {
         return name;
@@ -45,11 +45,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public UserGroupEnum getUserGroup() {
+    public UserBackofficeGroupEnum getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroupEnum userGroup) {
+    public void setUserGroup(UserBackofficeGroupEnum userGroup) {
         this.userGroup = userGroup;
     }
 
