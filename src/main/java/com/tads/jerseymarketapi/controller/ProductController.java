@@ -4,15 +4,12 @@ import com.tads.jerseymarketapi.dto.ProductDto;
 import com.tads.jerseymarketapi.dto.UpdateProductDto;
 import com.tads.jerseymarketapi.models.ProductModel;
 import com.tads.jerseymarketapi.service.ProductService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)

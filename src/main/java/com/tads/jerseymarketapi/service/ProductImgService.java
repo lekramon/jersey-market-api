@@ -60,7 +60,7 @@ public class ProductImgService {
     private static void validateFilename(String filename) {
         if (filename != null) {
             if (filename.contains("..")) {
-                throw new RuntimeException("Filename contains invalid path [" + filename + "]");
+                throw new IllegalArgumentException("Filename contains invalid path [" + filename + "]");
             }
         } else {
             throw new IllegalArgumentException("Filename cannot be null.");

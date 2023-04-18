@@ -22,8 +22,8 @@ public class ProductImgController {
     }
 
     @PostMapping("id{id}/upload")
-    public ResponseEntity<ProductImgModel> uploadProductImage(@PathVariable("id") long Id, @RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productImgService.save(file, Id));
+    public ResponseEntity<ProductImgModel> uploadProductImage(@PathVariable("id") long id, @RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productImgService.save(file, id));
     }
 
     @GetMapping("/id{id}")
