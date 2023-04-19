@@ -1,7 +1,7 @@
 package com.tads.jerseymarketapi.models;
 
-import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
-import com.tads.jerseymarketapi.models.enums.UserStatusEnum;
+import com.tads.jerseymarketapi.models.enums.UserBackofficeGroupEnum;
+import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -10,42 +10,45 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "TB_USER")
-public class UserModel implements Serializable {
+@Table(name = "tb_user")
+public class UserBackofficeModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUser;
-    @Column(nullable = false, length = 30)
-    private String userName;
+    private long id;
+    @Column(nullable = false, length = 60)
+    private String name;
     @Column(nullable = false, unique = true, length = 50)
     private String email;
     @Column(nullable = false, length = 100)
     private String password;
+    @Column(nullable = false, length = 14)
+    private String cpf;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserGroupEnum userGroup;
+    private UserBackofficeGroupEnum userGroup;
     @Column(nullable = false)
     private LocalDateTime registrationDate;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserStatusEnum status;
+    private StatusEnum status = StatusEnum.ACTIVE;
 
-    public long getIdUser() {
-        return idUser;
+
+    public long getId() {
+        return id;
     }
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setId(long idUser) {
+        this.id = idUser;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -64,11 +67,11 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public UserGroupEnum getUserGroup() {
+    public UserBackofficeGroupEnum getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroupEnum userGroup) {
+    public void setUserGroup(UserBackofficeGroupEnum userGroup) {
         this.userGroup = userGroup;
     }
 
@@ -80,11 +83,19 @@ public class UserModel implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public UserStatusEnum getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatusEnum status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

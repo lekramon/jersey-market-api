@@ -1,31 +1,32 @@
 package com.tads.jerseymarketapi.dto;
 
-import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserBackofficeGroupEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.apache.catalina.User;
+import org.hibernate.validator.constraints.br.CPF;
 
-public class UserDto {
+public class UserBackofficeDto {
 
     @NotBlank
-    private String userName;
+    private String name;
     @NotBlank
-    @Email
+    @Email(message = "invalid e-mail")
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    @CPF(message = "invalid cpf")
+    private String cpf;
     @NotNull
-    private UserGroupEnum userGroup;
-    @NotNull
-    private int status;
+    private UserBackofficeGroupEnum userGroup;
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -44,19 +45,21 @@ public class UserDto {
         this.password = password;
     }
 
-    public UserGroupEnum getUserGroup() {
+    public UserBackofficeGroupEnum getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroupEnum userGroup) {
+    public void setUserGroup(UserBackofficeGroupEnum userGroup) {
         this.userGroup = userGroup;
     }
 
-    public int getStatus() {
-        return status;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
+
 }
+
