@@ -25,10 +25,10 @@ public class ProductModel implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private double price;
+    private Double price;
 
     @Column(nullable = false)
-    private double rating;
+    private Double rating;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -64,19 +64,19 @@ public class ProductModel implements Serializable {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

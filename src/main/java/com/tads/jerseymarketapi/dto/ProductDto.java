@@ -12,7 +12,7 @@ public class ProductDto {
     private String description;
 
     @NotNull
-    private double price;
+    private Double price;
 
     @NotNull
     private Integer quantity;
@@ -33,11 +33,11 @@ public class ProductDto {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
