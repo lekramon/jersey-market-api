@@ -1,6 +1,6 @@
 package com.tads.jerseymarketapi.models;
 
-import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserBackofficeGroupEnum;
 import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import jakarta.persistence.*;
 
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_user")
-public class UserModel implements Serializable {
+public class UserBackofficeModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,7 +27,7 @@ public class UserModel implements Serializable {
     private String cpf;
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserGroupEnum userGroup;
+    private UserBackofficeGroupEnum userGroup;
     @Column(nullable = false)
     private LocalDateTime registrationDate;
     @Column(nullable = false)
@@ -67,11 +67,11 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public UserGroupEnum getUserGroup() {
+    public UserBackofficeGroupEnum getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroupEnum userGroup) {
+    public void setUserGroup(UserBackofficeGroupEnum userGroup) {
         this.userGroup = userGroup;
     }
 

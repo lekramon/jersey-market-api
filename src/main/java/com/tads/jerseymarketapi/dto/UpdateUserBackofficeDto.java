@@ -1,16 +1,16 @@
 package com.tads.jerseymarketapi.dto;
 
-import com.tads.jerseymarketapi.models.enums.UserGroupEnum;
+import com.tads.jerseymarketapi.models.enums.UserBackofficeGroupEnum;
 import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import org.hibernate.validator.constraints.br.CPF;
 
-public class UpdateUserDto {
+public class UpdateUserBackofficeDto {
 
     private StatusEnum status;
 
     private String name;
 
-    private UserGroupEnum userGroup;
+    private UserBackofficeGroupEnum userGroup;
 
     private String password;
 
@@ -33,11 +33,11 @@ public class UpdateUserDto {
         this.name = name;
     }
 
-    public UserGroupEnum getUserGroup() {
+    public UserBackofficeGroupEnum getUserGroup() {
         return userGroup;
     }
 
-    public void setUserGroup(UserGroupEnum userGroup) {
+    public void setUserGroup(UserBackofficeGroupEnum userGroup) {
         this.userGroup = userGroup;
     }
 

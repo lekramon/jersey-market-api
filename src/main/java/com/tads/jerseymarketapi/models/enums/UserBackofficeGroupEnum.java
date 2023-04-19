@@ -1,14 +1,13 @@
 package com.tads.jerseymarketapi.models.enums;
 
-public enum UserGroupEnum {
+public enum UserBackofficeGroupEnum {
     EMPTY(0),
     ADMIN(1),
-    STOREKEEPER(2),
-    CLIENT(3);
+    STOREKEEPER(2);
 
     private final int userGroupId;
 
-    UserGroupEnum(int userGroupId) {
+    UserBackofficeGroupEnum(int userGroupId) {
         this.userGroupId = userGroupId;
     }
 
