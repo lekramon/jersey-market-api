@@ -53,3 +53,4 @@ public class UpdateProductDto {
     public void setPrice(Double price) {
         this.price = price;
     }
+}
