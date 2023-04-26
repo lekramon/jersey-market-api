@@ -33,7 +33,6 @@ public class ProductImgModel implements Serializable {
 
 
     public ProductImgModel() {
-
     }
 
     public LocalDateTime getRegistrationDate() {
