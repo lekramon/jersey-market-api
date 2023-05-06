@@ -20,7 +20,7 @@ public class ClientModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 60)
     private String name;
 
     @Column(nullable = false, length = 100)
