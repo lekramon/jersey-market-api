@@ -36,6 +36,9 @@ public class ClientController {
         response.put("name", clientModel.getName());
         response.put("email", clientModel.getEmail());
         response.put("id", clientModel.getId());
+        response.put("cpf", clientModel.getCpf());
+        response.put("date", clientModel.getDataNascimento());
+        response.put("gender", clientModel.getGender());
         response.put("status", "success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
