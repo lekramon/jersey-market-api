@@ -1,5 +1,6 @@
 package com.tads.jerseymarketapi.models;
 
+import com.tads.jerseymarketapi.models.enums.PaymentFormEnum;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -18,14 +19,24 @@ public class PedidoModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
     private Long clientId;
+
+    @Column(nullable = false)
+    private double frete;
 
     @OneToMany(mappedBy = "pedidoId", cascade = CascadeType.ALL)
     private List<PedidoItemModel> itens;
 
     @Column(nullable = false)
     private LocalDateTime registrationDate;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private PaymentFormEnum paymentForm;
+
+    @Column(nullable = false)
+    private Long addressId;
+
 
     public long getId() {
         return id;
@@ -43,7 +54,6 @@ public class PedidoModel implements Serializable {
         this.clientId = clientId;
     }
 
-
     public List<PedidoItemModel> getItens() {
         return itens;
     }
@@ -58,5 +68,29 @@ public class PedidoModel implements Serializable {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public double getFrete() {
+        return frete;
+    }
+
+    public void setFrete(double frete) {
+        this.frete = frete;
+    }
+
+    public PaymentFormEnum getPaymentForm() {
+        return paymentForm;
+    }
+
+    public void setPaymentForm(PaymentFormEnum paymentForm) {
+        this.paymentForm = paymentForm;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 }

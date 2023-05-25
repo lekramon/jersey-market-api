@@ -5,11 +5,10 @@ import com.tads.jerseymarketapi.dto.PedidoDto;
 import com.tads.jerseymarketapi.models.PedidoItemModel;
 import com.tads.jerseymarketapi.models.PedidoModel;
 import com.tads.jerseymarketapi.repository.PedidoRepository;
+import com.tads.jerseymarketapi.service.PedidoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,10 +18,12 @@ import java.util.List;
 @RequestMapping("/pedidos")
 public class PedidoController {
 
-    private PedidoRepository pedidoRepository;
+    final PedidoRepository pedidoRepository;
+    final PedidoService pedidoService;
 
-    public PedidoController(PedidoRepository pedidoRepository) {
+    public PedidoController(PedidoRepository pedidoRepository, PedidoService pedidoService) {
         this.pedidoRepository = pedidoRepository;
+        this.pedidoService = pedidoService;
     }
 
     @PostMapping
@@ -30,6 +31,9 @@ public class PedidoController {
         PedidoModel pedidoModel = new PedidoModel();
         pedidoModel.setRegistrationDate(LocalDateTime.now());
         pedidoModel.setClientId(pedidoDto.getClientId());
+        pedidoModel.setFrete(pedidoDto.getFrete());
+        pedidoModel.setPaymentForm(pedidoDto.getPagamento());
+        pedidoModel.setAddressId(pedidoDto.getAddressId());
 
         List<PedidoItemModel> itens = new ArrayList<>();
 
@@ -48,5 +52,10 @@ public class PedidoController {
         pedidoRepository.save(pedidoModel);
 
         return ResponseEntity.ok("Pedido criado com sucesso!");
+    }
+
+    @GetMapping("/id{id}")
+    public ResponseEntity<List<PedidoModel>> getPedido(@PathVariable("id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findPedidoByClientId(id));
     }
 }
