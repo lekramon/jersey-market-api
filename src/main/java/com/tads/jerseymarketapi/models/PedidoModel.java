@@ -1,5 +1,6 @@
 package com.tads.jerseymarketapi.models;
 
+import com.tads.jerseymarketapi.models.enums.DeliveryStatusEnum;
 import com.tads.jerseymarketapi.models.enums.PaymentFormEnum;
 import jakarta.persistence.*;
 
@@ -33,6 +34,10 @@ public class PedidoModel implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private PaymentFormEnum paymentForm;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private DeliveryStatusEnum deliveryStatus = DeliveryStatusEnum.PREPARATION;
 
     @Column(nullable = false)
     private Long addressId;
@@ -92,5 +97,13 @@ public class PedidoModel implements Serializable {
 
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
+    }
+
+    public DeliveryStatusEnum getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatusEnum deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 }

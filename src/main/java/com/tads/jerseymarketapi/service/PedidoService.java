@@ -23,7 +23,7 @@ public class PedidoService {
 
     public List<PedidoModel> findPedidoByClientId(long id) {
         ClientModel clientModel = checkClientExistsById(id);
-        return pedidoRepository.findByClientId(clientModel);
+        return pedidoRepository.findByClientId(clientModel.getId());
     }
 
     private ClientModel checkClientExistsById(long id) {

@@ -1,18 +1,20 @@
 package com.tads.jerseymarketapi.controller;
 
+import com.tads.jerseymarketapi.dto.AtualizacaoStatusDto;
 import com.tads.jerseymarketapi.dto.ItemPedidoDto;
 import com.tads.jerseymarketapi.dto.PedidoDto;
+import com.tads.jerseymarketapi.dto.PedidoResponseDto;
 import com.tads.jerseymarketapi.models.PedidoItemModel;
 import com.tads.jerseymarketapi.models.PedidoModel;
 import com.tads.jerseymarketapi.repository.PedidoRepository;
 import com.tads.jerseymarketapi.service.PedidoService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -54,8 +56,67 @@ public class PedidoController {
         return ResponseEntity.ok("Pedido criado com sucesso!");
     }
 
-    @GetMapping("/id{id}")
-    public ResponseEntity<List<PedidoModel>> getPedido(@PathVariable("id") long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findPedidoByClientId(id));
+    @GetMapping("/cliente/id{id}")
+    public ResponseEntity<List<PedidoResponseDto>> getPedidosByClientId(@PathVariable("id") String clientId) {
+        long clientIdAsLong;
+        try {
+            clientIdAsLong = Long.parseLong(clientId);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<PedidoModel> pedidos = pedidoRepository.findByClientId(clientIdAsLong);
+
+        if (pedidos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<PedidoResponseDto> pedidosDto = new ArrayList<>();
+
+        for (PedidoModel pedidoModel : pedidos) {
+            PedidoResponseDto pedidoResponseDto = new PedidoResponseDto();
+            pedidoResponseDto.setPedidoId(pedidoModel.getId());
+            pedidoResponseDto.setClientId(pedidoModel.getClientId());
+            pedidoResponseDto.setAddressId(pedidoModel.getAddressId());
+            pedidoResponseDto.setFrete(pedidoModel.getFrete());
+            pedidoResponseDto.setPagamento(pedidoModel.getPaymentForm().toString());
+            pedidoResponseDto.setStatusDelivery(pedidoModel.getDeliveryStatus().toString());
+
+            List<ItemPedidoDto> itensPedido = new ArrayList<>();
+            double valorTotal = 0.0;
+
+            for (PedidoItemModel item : pedidoModel.getItens()) {
+                ItemPedidoDto itemPedidoDto = new ItemPedidoDto();
+                itemPedidoDto.setProdutoId(item.getProdutoId());
+                itemPedidoDto.setQuantidade(item.getQuantidade());
+                itemPedidoDto.setPrecoUnitario(item.getPrecoUnitario());
+
+                itensPedido.add(itemPedidoDto);
+                valorTotal += item.getQuantidade() * item.getPrecoUnitario();
+            }
+
+            pedidoResponseDto.setItensPedido(itensPedido);
+            pedidoResponseDto.setValorTotal(valorTotal);
+
+            pedidosDto.add(pedidoResponseDto);
+        }
+
+        return ResponseEntity.ok(pedidosDto);
+    }
+
+    @PutMapping("/id{id}/update")
+    public ResponseEntity<?> atualizarStatusEntrega(@PathVariable("id") Long id, @RequestBody AtualizacaoStatusDto atualizacaoStatusDto) {
+        Optional<PedidoModel> optionalPedido = pedidoRepository.findById(id);
+
+        if (optionalPedido.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        PedidoModel pedido = optionalPedido.get();
+        pedido.setDeliveryStatus(atualizacaoStatusDto.getStatus());
+
+        pedidoRepository.save(pedido);
+
+        return ResponseEntity.ok("Status de entrega atualizado com sucesso!");
     }
 }
