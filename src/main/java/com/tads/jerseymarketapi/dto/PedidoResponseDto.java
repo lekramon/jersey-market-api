@@ -14,9 +14,10 @@ public class PedidoResponseDto {
 
     private double valorTotal;
 
+    private LocalDateTime registrationDate;
+
     private List<ItemPedidoDto> itensPedido;
 
-    private LocalDateTime registrationDate;
 
     public Long getPedidoId() {
         return pedidoId;
