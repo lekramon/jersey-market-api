@@ -32,7 +32,7 @@ public class JerseyMarketApiApplication {
 
     @GetMapping("/")
     public String index() {
-        return "Olá amigo, se você chegou até aqui, significa que você viu o projeto e sou grato por isso!";
+        return "Flamengo!";
     }
 
 }
