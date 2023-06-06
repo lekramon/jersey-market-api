@@ -2,6 +2,7 @@ package com.tads.jerseymarketapi.dto;
 
 import com.tads.jerseymarketapi.models.enums.PaymentFormEnum;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PedidoDto {
@@ -15,6 +16,8 @@ public class PedidoDto {
     private double frete;
 
     private PaymentFormEnum pagamento;
+
+    private LocalDateTime registrationDate;
 
     public List<ItemPedidoDto> getItensPedido() {
         return itensPedido;

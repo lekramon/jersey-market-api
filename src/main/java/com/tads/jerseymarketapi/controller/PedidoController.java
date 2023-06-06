@@ -37,6 +37,7 @@ public class PedidoController {
         pedidoModel.setFrete(pedidoDto.getFrete());
         pedidoModel.setPaymentForm(pedidoDto.getPagamento());
         pedidoModel.setAddressId(pedidoDto.getAddressId());
+        pedidoModel.setRegistrationDate(LocalDateTime.now());
 
         List<PedidoItemModel> itens = new ArrayList<>();
 
@@ -82,6 +83,7 @@ public class PedidoController {
             pedidoResponseDto.setFrete(pedidoModel.getFrete());
             pedidoResponseDto.setPagamento(pedidoModel.getPaymentForm().toString());
             pedidoResponseDto.setStatusDelivery(pedidoModel.getDeliveryStatus().toString());
+            pedidoResponseDto.setRegistrationDate(pedidoModel.getRegistrationDate());
 
             List<ItemPedidoDto> itensPedido = new ArrayList<>();
             double valorTotal = 0.0;
@@ -139,6 +141,7 @@ public class PedidoController {
             pedidoDto.setFrete(pedidoModel.getFrete());
             pedidoDto.setPagamento(pedidoModel.getPaymentForm().toString());
             pedidoDto.setStatusDelivery(pedidoModel.getDeliveryStatus().toString());
+            pedidoDto.setRegistrationDate(pedidoModel.getRegistrationDate());
 
             List<ItemPedidoDto> itensPedido = new ArrayList<>();
             double valorTotal = 0.0;

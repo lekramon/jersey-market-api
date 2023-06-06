@@ -1,5 +1,6 @@
 package com.tads.jerseymarketapi.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PedidoResponseDto {
@@ -14,6 +15,8 @@ public class PedidoResponseDto {
     private double valorTotal;
 
     private List<ItemPedidoDto> itensPedido;
+
+    private LocalDateTime registrationDate;
 
     public Long getPedidoId() {
         return pedidoId;
@@ -78,5 +81,13 @@ public class PedidoResponseDto {
 
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }
