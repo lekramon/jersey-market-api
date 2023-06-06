@@ -1,6 +1,7 @@
 package com.tads.jerseymarketapi.controller;
 
 import com.tads.jerseymarketapi.dto.ClientAddressDto;
+import com.tads.jerseymarketapi.dto.ClientAddressTypeDto;
 import com.tads.jerseymarketapi.models.ClientAdressModel;
 import com.tads.jerseymarketapi.service.ClientAddressService;
 import jakarta.validation.Valid;
@@ -29,5 +30,10 @@ public class ClientAddressController {
     @GetMapping("/id{id}")
     public ResponseEntity<List<ClientAdressModel>> getProductImages(@PathVariable("id") long id) {
         return ResponseEntity.status(HttpStatus.OK).body(clientAddressService.findAddressByClientId(id));
+    }
+
+    @PutMapping("/{addressId}/update")
+    public ResponseEntity<ClientAdressModel> updateAddressType(@PathVariable("addressId") long addressId, @RequestBody @Valid ClientAddressTypeDto clientAddressTypeDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientAddressService.updateAddressType(addressId, clientAddressTypeDto));
     }
 }

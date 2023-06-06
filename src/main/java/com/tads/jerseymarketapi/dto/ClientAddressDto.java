@@ -17,7 +17,6 @@ public class ClientAddressDto {
     private ClientAddressEnum type;
 
 
-
     public String getCep() {
         return cep;
     }
@@ -49,5 +48,5 @@ public class ClientAddressDto {
     public ClientAddressEnum getType() {
         return type;
     }
-    
+
 }
