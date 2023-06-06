@@ -119,4 +119,46 @@ public class PedidoController {
 
         return ResponseEntity.ok("Status de entrega atualizado com sucesso!");
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PedidoResponseDto>> getAllPedidos() {
+        List<PedidoModel> pedidos = pedidoRepository.findAll();
+
+        if (pedidos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<PedidoResponseDto> pedidosDto = new ArrayList<>();
+
+        for (PedidoModel pedidoModel : pedidos) {
+            PedidoResponseDto pedidoDto = new PedidoResponseDto();
+            pedidoDto.setPedidoId(pedidoModel.getId());
+            pedidoDto.setClientId(pedidoModel.getClientId());
+            pedidoDto.setAddressId(pedidoModel.getAddressId());
+            pedidoDto.setFrete(pedidoModel.getFrete());
+            pedidoDto.setPagamento(pedidoModel.getPaymentForm().toString());
+            pedidoDto.setStatusDelivery(pedidoModel.getDeliveryStatus().toString());
+
+            List<ItemPedidoDto> itensPedido = new ArrayList<>();
+            double valorTotal = 0.0;
+
+            for (PedidoItemModel item : pedidoModel.getItens()) {
+                ItemPedidoDto itemPedidoDto = new ItemPedidoDto();
+                itemPedidoDto.setProdutoId(item.getProdutoId());
+                itemPedidoDto.setQuantidade(item.getQuantidade());
+                itemPedidoDto.setPrecoUnitario(item.getPrecoUnitario());
+
+                itensPedido.add(itemPedidoDto);
+                valorTotal += item.getQuantidade() * item.getPrecoUnitario();
+            }
+
+            pedidoDto.setItensPedido(itensPedido);
+            pedidoDto.setValorTotal(valorTotal);
+
+            pedidosDto.add(pedidoDto);
+        }
+
+        return ResponseEntity.ok(pedidosDto);
+    }
+
 }
