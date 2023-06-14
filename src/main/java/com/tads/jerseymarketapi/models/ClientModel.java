@@ -1,7 +1,6 @@
 package com.tads.jerseymarketapi.models;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tads.jerseymarketapi.models.enums.ClientGenderEnum;
 import com.tads.jerseymarketapi.models.enums.StatusEnum;
 import jakarta.persistence.*;
