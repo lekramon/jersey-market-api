@@ -13,7 +13,6 @@ public class ProductFactory {
         ProductModel productModel = new ProductModel();
         BeanUtils.copyProperties(productDto, productModel);
         productModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        productModel.setRating((double) 0);
         return productModel;
     }
 }

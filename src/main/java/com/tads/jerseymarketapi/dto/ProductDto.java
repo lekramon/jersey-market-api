@@ -17,6 +17,8 @@ public class ProductDto {
     @NotNull
     private Integer quantity;
 
+    private Double rating;
+
     public String getName() {
         return name;
     }
@@ -47,5 +49,13 @@ public class ProductDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }
